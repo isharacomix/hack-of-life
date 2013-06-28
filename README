@@ -1,0 +1,326 @@
+===============================================================================
+=            oo                 THE HACK OF LIFE                 oo           =
+=    o       oo                                                  o            =
+=     o            o        An Out of Challenge 7DRL                o         =
+=   ooo           o o          by Barry Peddycord                  oo         =
+=                 o o                                       ooo           oo  =
+=                  o         ishara@isharacomix.com                       oo  =
+===============================================================================
+
+HISTORY:
+    The Game of Life is a cellular automaton developed by the British
+    Mathemetician John Horton Conway in 1970. [from wikipedia]
+    
+    Life is a zero-player "game" where the "player" sets up a board that
+    consists of living and dead cells, and then once the game is started,
+    the board comes to life and runs based on the initial configuration
+    following a set of five simple rules.
+    
+    FOR EVERY GENERATION:
+      * A cell is either alive or dead.
+      * Any live cell with fewer than two live neighbors dies, as if caused
+        by underpopulation.
+      * Any live cell with more than three live neighbors dies, as if by
+        overcrowding.
+      * Any live cell with two or three live neighbors lives on to the next
+        generation.
+      * Any dead cell with exactly three live neighbors becomes a live cell.
+    
+    Implementing these rules in a software environment is a comparatively
+    trivial task and is presented as a project for many introductory computer
+    science students. However, the simple nature of the game belies its
+    computational significance.
+    
+    The 'language' of the Game of Life is, in fact, Turing Complete, which
+    means that any problem in the world that can be computed, can be computed
+    using nothing but the Game of Life and a single initial configuration.
+    
+    This is proven in other documents, and you are encouaraged to check them
+    out if you are interested in automata and computability theory.
+
+WHAT IS THIS?
+    Considering how Life is a zero-player game, it makes it lots of fun as a
+    curiosity, but makes it very easy for people who are not life enthusiasts
+    to quickly become bored after watching yet another glider explode.
+    
+    So this decides to put the Game back in the Game of Life. And it does that
+    by taking the interface of the RogueLike genre of computer games and
+    terribly abusing it. The name of the game is adopted from the RogueLike
+    giant NetHack, resulting in the Hack of Life.
+    
+    First of all, a few small additions to the rules are necessary.
+    
+    FOR EVERY GENERATION:
+      * A cell is either alive or dead.
+      * Every live cell either has a color, or is colorless (white).
+      * Any live cell with fewer than two live neighbors dies, as if caused
+        by underpopulation.
+      * Any live cell with more than three live neighbors dies, as if by
+        overcrowding.
+      * Any live cell with two or three live neighbors lives on to the next
+        generation.
+          * If the majority of the colored live neighbors share the same
+            color, then the cell in question will adopt the new color.
+          * A live cell will never adopt colorlessness.
+      * Any dead cell with exactly three live neighbors becomes a live cell.
+          * If the majority of the colored live neighbors share the same
+            color, then the cell in question will adopt the new color.
+          * If there is a tie among the colored neighbors, then the cell will
+            be born colorless.
+    
+    This game of life supports six players, plus the colorless no-player.
+    
+    In the original Game of Life, the board remains in stasis while the player
+    sets it up. However, in this game, the board is being altered as it is
+    running. To do this, each player controls a generator, a device that can
+    plant, harvest, and hatch cells.
+    
+    The generator can take the following actions:
+        * Move in one of 8 directions, or stay in place.
+            y k u
+            h . l   (Alternatively, you may use the arrow keys for hjkl)
+            b j n
+        * Plant a seed in one of 8 directions or where it is standing.
+            Y K U
+            H > L
+            B J N
+        * Harvest a live cell or seed of its own color where it is standing.
+              ,
+        * Hatch all seeds on the map of its color remotely.
+            SPACE
+    
+    Other, non-game actions include:
+        * Quit the game. If playing as a guest in a multiplayer game, your
+          cells will become colorless.
+              Q
+        * Look around the map.
+            Toggle with 'w'. When looking around, a [V] will appear in the
+            status window.
+        * Enter stasis mode where generators can move without the cells
+          iterating over their generations.
+            Toggle with 'e'. Available only if SANDBOX is activated. When in
+            stasis, an [S] will appear in the status window.
+        * Start/stop message logging to a text file in the current directory.
+          This allows you to record conversations
+          in network play.
+              a
+        * Save a bitmap representation of the board to the current directory.
+              s
+        * Save a challenge bitmap representation of the board to the current
+          directory so the board can be loaded in challenge mode.
+              S
+        * End the game and return to the Main Menu. In a network game, 'Q'
+          surrenders but allows you to remain as a spectator. 'X' actually
+          terminates the game.
+              X
+        * Display the rules of the current game. Very useful in multiplayer. :)
+              ?
+        * Enter chat mode/send chat message.
+            ENTER
+    
+    Each of these actions take one generation of game time to act. All players
+    take their turns simultaneously. Players move first, then the cells advance
+    a generation, and finally, seeds hatch if they were not destroyed.
+    
+    A generator has a store of 100 seeds. These seeds can be planted anywhere
+    on the map. A seeded cell counts, for all intents and purposes, as a dead
+    cell. It will immediately grow into a new cell if it has neighbors (which
+    will destroy the seed), and it does not count as a live neighbor itself.
+    The generator can then hatch all of the seeds of its color on the map, and
+    they will instantly become live cells and start growing from generation to
+    generation. Due to the time it takes to plant the seeds, smaller patterns
+    that can be planted in quick amounts of time are preferably to large,
+    complicated patterns.
+    
+    When the generator starts running out of seeds, it can harvest its own
+    cells to restock. Therefore, combinations that indefinitely create new
+    cells can be used as farms to restock. If your have no seeds, and there
+    are no living cells on the grid, your generator is kicked out of the game.
+    
+    The object of the game is simple - after a set amount of time, see to it
+    that the map consists of more cells of your color than any other color.
+    
+    Generators are represented on the map as colored '@' symbols. Seeds are
+    shown as '.' symbols, and live cells appear as 'o' symbols. Your cells can
+    be distinguished from other by both the color and that your cells are shown
+    in boldface. If you have a hard time seeing color, or your terminal does
+    not support it, you can change the option SERIAL GLYPHS which will display
+    other players' symbols as letters and numbers.
+    
+    '-' symbols represent cells that are off the grid.
+
+RUNNING THE GAME:
+    For those of you running windows, simply go into the windows folder and
+    run the hackoflife.exe file. I've not tested it on Windows, so I don't know
+    how well it works. If you encounter problems when running it, please send
+    me a bug report.
+    
+    For the rest of you, hopefully you can compile it from source. To do that,
+    ensure that you have ncurses installed. Then open a terminal in this
+    directory and run the command:
+    
+        ./configure && make
+    
+    If you are running an older machine that does not support IPv6, you may
+    either get an error message or simply not be allowed to start network
+    games. If that's the case, then run:
+    
+        ./configure --without-ipv6
+    
+    You should have gotten a big list of gibberish and then ended up back at
+    the command line. From there, try to run:
+    
+        ./hackoflife
+    
+    If that works, then congratulations! If not, just send me an e-mail and
+    I'll do what I can to figure what happened.
+
+PLAYING THE GAME:    
+    The game comes in 4 play styles.
+    
+        CONQUEST    : Play through a course of randomly generated maps and try
+                      to eliminate all of the cells of the other colors.
+                            (Opponents do not use generators in this mode)
+        CHALLENGE   : Same as conquest, but starts the game with a preloaded
+                      configuration as opposed to a randomly generated one.
+                            (Opponents do not use generators in this mode)
+        HOTSEAT     : Test your wits against up to five other human opponents
+                      on a blank or preconfigured field.
+        NET PLAY    : Same as hotseat, but less risk of dying due to
+                      overcrowding.
+    
+    The game features a numerous different parameters that can be altered to
+    control the game. You can set these to different values to make the
+    single-player mode easier or more difficult, or to shake up the multiplayer
+    mode with different rules.
+    
+        MY COLOR        : Choose the color that you would like to represent
+                          your cells. This will have no effect on the color
+                          that you appear to other players, as colors are
+                          assigned to other players randomly (local parameter
+                          only).
+        SERIAL GLYPHS   : When true, instead of displaying all opposing cells
+                          as '.' and 'o' symbols, the cells will instead by
+                          shown as capital letters for live cells (A,B,C...)
+                          and lowercase letters for seeds (a,b,c...). Their
+                          generators appear as numerals (1,2,3...). This is
+                          useful if your terminal does not have color support
+                          (local parameter only).
+        SPACED GRID     : Adds a space between columns of cells to make the
+                          terminal more square-like (local parameter only).
+        TERMINAL WIDTH  : Asserts the horizontal length of the terminal in
+                          cells (local parameter only).
+        TERMINAL HEIGHT : Asserts the vertical length of the terminal in cells
+                          (local parameter only).
+        STARTING SEEDS  : The number of seeds each generator starts with. Set
+                          this to 0 to start with an infinite number.
+        MAX SEEDS       : The maximum number of seeds a generator can carry.
+        GRID WIDTH      : The width of the board in cells. Upper limit of 10K.
+        GRID HEIGHT     : The height of the board in cells. Upper limit of 10K.
+                NOTE: The maximum board size is 10000x10000, which results in
+                      100000000 (.1 billion) elements. On my computer, the
+                      calculation of the next grid takes 10 seconds. Take this
+                      into consideration when setting this option.
+        GRID WRAP       : When enabled, the top of the grid is considered a
+                          neighbor to the bottom of the grid, and the left to
+                          the right.
+        NOISE           : When enabled, the field starts off with random
+                          colorless cells.
+        OTHER CELLS     : Set the properties of cells that are not your color.
+            PASSIVE         : You can move your generator on top of other
+                              colored cells.
+            SOLID           : You may not move over other cells.
+            DEADLY          : Touching a cell of another color will put you
+                              out of the game.
+        TIMEOUT         : The amount of time a player has to take their turn.
+                          When the timer runs out, the player is forced to
+                          'wait'. This is a value measured in milliseconds.
+                          Setting this value very low can create a 'realtime'
+                          game of life, where turns move very quickly.
+                          Setting it to zero blocks turn times indefinitely.
+        NET HANG        : The amount of time that the game should wait for a
+                          peer to respond to a required request before killing
+                          the connection. If you're playing on a laggy network,
+                          you may wish to set this a little higher.
+        GENERATIONS     : The number of generations before the game ends. The
+                          winner is the player who owns the most cells on the
+                          grid. Set to 0 for an unlimited game.
+        RULES           : The set of rules for the game.
+            SURVIVAL        : The game ends after a set number of generations
+                              pass. The winner is the player with the most of
+                              his color on the map.
+            EXTERMINATION   : The game ends after all of the cells on the map
+                              of a color have been exhausted. Players may not
+                              harvest cells in this mode.
+            PROLIFERATION   : The game ends when one color covers one third
+                              of the grid.
+            SANDBOX         : A rule-less version of the game for people who
+                              want to use it as a singleplayer/multiplayer Life
+                              exploring program. This enables stasis mode to be
+                              toggled with the 'e' key.
+        RULESTRING          : Allows you set up your own Survival/Birth rules
+                              to play things other than Conway's original
+                              S23/B3 game. Simply select the sets of numbers
+                              that you want to rule the game world.
+                              
+                              The rulestring is a set of 18 values, each a
+                              number between 0 and 100. The number represents
+                              the percentage of Survival/Birth occuring when
+                              the number of neighbors is a certain value. If
+                              all of these values are either 0 or 100, then
+                              the Game of Life will proceed deterministically.
+                              If you want to make fuzzy room where chance might
+                              be considered (quantum life?), then feel free to
+                              set them to other values.
+
+NETWORK PLAY:
+    Network play allows multiple Life enthusiasts to play together either in
+    a competitive match or simply in a sandbox. Network play works as follows:
+      * One player chooses HOST NETWORK GAME.
+      * The rest of the players JOIN NETWORK GAME.
+      * Once the host has enough players, he starts the game up. The other
+        players see the breakdown of his rules before starting up. The game
+        then begins.
+      * Players can chat by pressing enter. Simply enter your message and
+        press enter again to send the message. All messages are visible by
+        everyone.
+      * If you try to host a game and the system simply returns to the main
+        menu without letting other players connect, check to make sure your
+        computer supports IPv6. If it doesn't, recompile the game without
+        IPv6.
+
+LICENSE:
+    The Hack of Life is Free Software released under the GNU General Public
+    License, version 3. This file is included in the file titled COPYING.
+    Feel free to share and modify. If you have any trouble, comments, or
+    suggestions regarding the program, shoot me an e-mail.
+
+DISCLAIMER:
+    THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+    APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+    HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+    OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+    PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+    IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+    ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+RESOURCES:
+    The Internet has a whole culture devoted the the Game of Life and Cellular
+    Automata. Here are a few links for those of you who may be interested.
+    
+    The Jargon file entry for the Game of Life. Hackers only. :)
+        http://www.catb.org/jargon/html/L/life.html
+    
+    Wikipedia, the ultimate authority for everything in the world, has a good
+    article.
+        http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+    
+    The Conway Life home page with tons of resources for Life enthusiasts,
+    including its own wiki full of interesting tidbits of information.
+        http://www.conwaylife.com/
+    
+    The Life Lexicon is a list of all of the terms and jargon associated with
+    Life.
+        http://www.argentum.freeserve.co.uk/lex_home.htm
+

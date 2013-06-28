@@ -1,0 +1,47 @@
+2010-__-__  Version 1.0.2 <>
+
+2010-04-12  Version 1.0.1 <Bugfix Release>
+ * Bugfixes:
+    - Screen refreshes when '?' is pressed
+    - Setting STARTING SEEDS to 0 no longer automatically kills you
+    - Changed percentage needed for proliferation mode to 33%
+    - Fixed some serious synchronization issues.
+
+2010-04-06  Version 1.0.0 <7DRL>
+ * Portability Fixes:
+    - *NOW* networking works on Windows!
+    - Windows uses an IPv4 server by default now
+ * New Option: NET HANG
+    - Can now set the amount of time the game waits for a peer to respond.
+ * Game is Finished: Zzzzzzz...
+
+2010-04-05  Version 0.2.1 <Release Candidate>
+ * Challenge Mode:
+    - Game now loads challenge maps
+ * Portability Fixes:
+    - Game should now save/load maps correctly on big endian architecture
+    - Networking should work in Windows now
+
+2010-04-04  Version 0.2.0 <Second Snapshot>
+ * Finished the UI:
+    - Messaging and message logging, UI is now complete
+    - Players can chat now
+    - The game gives useful output to the player
+    - '?' displays game options
+    - Game saves and loads configuration file
+ * Game rules finished:
+    - The basic game rules have been implemented, games can start and finish
+ * Networking:
+    - Got networking finished
+
+2010-04-01  Version 0.1.0  <First Snapshot>
+ * PROJECT FINISHED: April Fools!
+ * Core Functionality Developed:
+    - Rules of life implemented
+    - Main menu mostly implemented
+    - Most game options are configurable with visible effects
+    - Screenshots are saved properly
+
+2010-03-30  Version 0.0.0  <Project Start>
+ * PROJECT STARTED: Started project Hack of Life
+
